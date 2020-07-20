@@ -1,3 +1,40 @@
 body{
   background-color: rgb(241, 231, 231);
+  max-width: 1200px;
+  text-align: center;
+}
+header {
+  background-color: black;
+  color: whitesmoke;    
+  height: 50px;   
+}
+body {
+  font-family: 'Indie Flower', cursive;
+  font-size: larger;
+}
+.playerInfo, input {
+  padding-top: 20px;
+  font-size: xx-large;
+  border-radius: 16px;
+}
+.grid-size {
+  display: flex;
+  flex-wrap: wrap;    
+  height: 100px;
+  width: 300px;
+  margin: 0 auto;    
+}
+.grid {
+  display: flex;
+  box-sizing: border-box;
+  background-color:  whitesmoke; 
+  border-style: solid;
+  border-color: black;
+  font-size: xx-large;
+  height: 100px;
+  width: 100px;  
+  justify-content: center;  
+  align-items: center;
+  flex-direction: row;
+  
 }

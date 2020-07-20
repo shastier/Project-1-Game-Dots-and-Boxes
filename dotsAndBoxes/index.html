@@ -3,10 +3,32 @@
   <head>
     <meta charset="utf-8">
     <title>Dots and Boxes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
     <link rel='stylesheet' type='text/css' href='./style.css'>
     <script src='./main.js'></script>
   </head>
   <body>
-
+    <header>
+      <h1>Dots and Boxes</h1>
+    </header>
+    <section class="main" id="initial-state">
+      <div class="instructions">
+        <h2>How to play: </h2>
+        <p>Dots and Boxes is a pencil and paper game for two players. It was first published in the 19th century by French mathematician Edouard Lucas. The game starts with an empty grid of dots, the grid can be of any size between 3x3 dots and up to 5x5 dots. Players will take turns to connect two dots with an horizontal or vertical line, if a player can close a 1x1 box, it earns one point and takes another turn to play. The game ends when no more lines can be placed. The winner will be the player who was able to accumulate more points.</p>
+      </div>
+      <div class="playerInfo">
+        <form id="form-playerInfo">
+          <label for="player" id="label-player">Enter players names</label>
+          <input type="text" id="player1" name="player1" placeholder="Player 1"/>
+          <input type="text" id="player2" name="player2" placeholder="Player 2"/>
+        </form>
+      </div>
+      <h2>Size of grid</h2>
+      <div class="grid-size">
+        <div class="grid" id="3x3">3x3</div>
+        <div class="grid" id="4x4">4x4</div>
+        <div class="grid" id="5x5">5x5</div>
+      </div>
+    </section>    
   </body>
 </html>
