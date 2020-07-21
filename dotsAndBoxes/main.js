@@ -114,7 +114,26 @@ function setGrid(e){
             gameBoard.setPlayer(player2);
         }
     }   
-    //update screen to wireframe b.
+    //update screen to wireframe b.    
+    const main = document.getElementsByClassName('main');
+    for (let i = 0; i < main.length; i++) {
+        main[i].remove();                
+    }
+    const instructions_div = document.createElement('div');
+    instructions_div.className = 'instructions';
+    const playerX_h2 = document.createElement('h2');
+    playerX_h2.setAttribute('id', 'player1');
+    playerX_h2.innerHTML = gameBoard.players[0].getName();
+    instructions_div.appendChild(playerX_h2);
+
+    const instruction_p = document.createElement('p');
+    instruction_p.innerHTML = "Is your turn to play!";
+    instructions_div.appendChild(instruction_p);
+    
+    const body = document.querySelector('body');
+    body.appendChild(instructions_div);
+
+    //show grid:
 };
 window.onload = function(){    
     document.querySelector('#player1').addEventListener('input', setPlayer);
