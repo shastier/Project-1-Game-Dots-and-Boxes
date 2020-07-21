@@ -160,6 +160,15 @@ function setGrid(e){
                 line_vertical_div.setAttribute('id',`${i},${k}`);
                 line_vertical_div.innerHTML = `${i},${k}`;
                 grid3_table.appendChild(line_vertical_div);
+
+                if(k != 3){
+                    //create empty box
+                    const box = document.createElement('div');
+                    box.className = "box";   
+                    box.setAttribute('id',`${i},${k}`);
+                    box.innerHTML = `${i},${k}`;
+                    grid3_table.appendChild(box);
+                }
             }
         }
     }  
