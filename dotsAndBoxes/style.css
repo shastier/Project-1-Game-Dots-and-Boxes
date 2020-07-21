@@ -62,8 +62,7 @@ label {
   display: flex;
   flex-wrap: wrap;
   height: 130px;
-  width: 130px;
-  background-color: blanchedalmond;
+  width: 130px;  
   margin: 0 auto;
 }
 .dot {
@@ -88,6 +87,8 @@ label {
 .box {
   display: flex;
   height: 50px;
-  width: 55px;
-  background-color: white;
+  width: 55px;      
+  justify-content: center;  
+  align-items: center;
+  font-size: xx-large;
 }

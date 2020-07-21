@@ -134,46 +134,54 @@ function setGrid(e){
     body.appendChild(instructions_div);
     
     //create gridTable div
-    const grid3_table = document.createElement('div');
-    grid3_table.className = 'grid3_table';
+    const grid_table = document.createElement('div');
+    if (gridSize === 4) {
+        grid_table.style.height = "190px";
+        grid_table.style.width = "190px";
+    }else if (gridSize === 5) {
+        grid_table.style.height = "250px";
+        grid_table.style.width = "250px";
+    }
+
+    grid_table.className = 'grid3_table';
     
-    for (let i = 1; i <= 3; i++) {
-        for (let j = 1; j <= 3; j++) {
+    for (let i = 1; i <= gridSize; i++) {
+        for (let j = 1; j <= gridSize; j++) {
             //create dot
             const dot_div = document.createElement('div');
             dot_div.className = "dot";
-            grid3_table.appendChild(dot_div);
-            if(j != 3){
+            grid_table.appendChild(dot_div);
+            if(j != gridSize){
                 //create horizontal line
                 const line_horiz_div = document.createElement('div');
                 line_horiz_div.className = "horizontal_line"
                 line_horiz_div.setAttribute('id',`${i},${j}`);
                 line_horiz_div.innerHTML = `${i},${j}`;
-                grid3_table.appendChild(line_horiz_div);
+                grid_table.appendChild(line_horiz_div);
             }
         }
-        if(i != 3){
-            for (let k = 1; k <= 3; k++) {
+        if(i != gridSize){
+            for (let k = 1; k <= gridSize; k++) {
                 //create vertical line            
                 const line_vertical_div = document.createElement('div');
                 line_vertical_div.className = "vertical_line";   
                 line_vertical_div.setAttribute('id',`${i},${k}`);
                 line_vertical_div.innerHTML = `${i},${k}`;
-                grid3_table.appendChild(line_vertical_div);
+                grid_table.appendChild(line_vertical_div);
 
-                if(k != 3){
+                if(k != gridSize){
                     //create empty box
                     const box = document.createElement('div');
                     box.className = "box";   
                     box.setAttribute('id',`${i},${k}`);
                     box.innerHTML = `${i},${k}`;
-                    grid3_table.appendChild(box);
+                    grid_table.appendChild(box);
                 }
             }
         }
     }  
     //show grid:
-    body.appendChild(grid3_table);
+    body.appendChild(grid_table);
 };
 window.onload = function(){    
     document.querySelector('#player1').addEventListener('input', setPlayer);
