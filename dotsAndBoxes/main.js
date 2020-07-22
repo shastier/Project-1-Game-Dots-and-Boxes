@@ -22,10 +22,34 @@ class GameBoard {
         return this.playerTurn;
     };
     setPlayerTurn(turn) {
-        this.playerTurn = turn;
+        if (turn === this.players.length-1) {
+            this.playerTurn --;
+        } else {
+            this.playerTurn ++;
+        }
     };
     play(){
-        alert("Time to play!");
+        //call grid and draw a line
+        const gameGrid = this.grid[0];
+
+        gameGrid.drawLine();
+        //if, no new box was created, setPlayerTurn
+        if (gameGrid.getNewBox()=== null) {
+            this.setPlayerTurn(this.getPlayerTurn());
+            // update instructions <h2> to updated player in turn.
+            updateInstructionsPlayerInTurn();
+        } else {
+            // grid is full. 
+            if (gameGrid.isFull()) {
+                //show wireframe e
+            } else {
+            // show wireframe d.
+            // current player keep playing. No need to setPlayerTurn.
+            // update <p> "closed a Box and is your turn to play!" on class instructions <div>
+            // update current Box's (by id) innerHTML to:  currrent player's name
+            // set Box's font color to: current player's color.
+            }
+        }        
     };
     showResults(){
         alert("Show results");
@@ -81,12 +105,24 @@ class Grid {
     getBoxes(){
         return this.boxes;
     };
+    isFull(){
+        const totalBoxes = (this.row-1) * (this.column-1);
+
+        return(this.boxes.length === totalBoxes);
+    }
 }
 class Box {
 
 }
 const gameBoard = new GameBoard();
 
+//Manipulating the DOM functions.
+function updateInstructionsPlayerInTurn(){
+    const playerX_h2 = document.getElementById('player_in_turn');
+    
+    playerX_h2.style.color = gameBoard.players[gameBoard.playerTurn].getColor();
+    playerX_h2.innerHTML = gameBoard.players[gameBoard.getPlayerTurn()].getName();
+};
 function setPlayer(e) {    
     let player = new Player(e.target.value);
     const playerNumber = e.target.placeholder;
@@ -213,7 +249,7 @@ function gameBoard_drawLine(e) {
     const color = gameBoard.players[gameBoard.getPlayerTurn()].getColor();    
     e.target.style.backgroundColor = color;
     
-    gameBoard.grid[0].drawLine();
+    gameBoard.play();    
 }
 window.onload = function(){    
     document.querySelector('#player1').addEventListener('input', setPlayer);
