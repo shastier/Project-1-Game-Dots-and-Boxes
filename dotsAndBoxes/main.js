@@ -158,6 +158,7 @@ function setGrid(e){
                 line_horiz_div.setAttribute('id',`${i},${j}`);
                 line_horiz_div.addEventListener('mouseover', mouseOver);
                 line_horiz_div.addEventListener('mouseout', mouseOut);
+                line_horiz_div.addEventListener('click', gameBoard_drawLine);
               //  line_horiz_div.innerHTML = `${i},${j}`;
                 grid_table.appendChild(line_horiz_div);
             }
@@ -170,6 +171,7 @@ function setGrid(e){
                 line_vertical_div.setAttribute('id',`${i},${k}`);
                 line_vertical_div.addEventListener('mouseover', mouseOver);
                 line_vertical_div.addEventListener('mouseout', mouseOut);
+                line_vertical_div.addEventListener('click', gameBoard_drawLine);
                // line_vertical_div.innerHTML = `${i},${k}`;
                 grid_table.appendChild(line_vertical_div);
 
@@ -193,7 +195,14 @@ function mouseOver(e) {
 function mouseOut(e) {
     e.target.classList.remove('colored_in');
 }
-
+function gameBoard_drawLine(e) {
+    e.target.removeEventListener('mouseover', mouseOver);
+    e.target.removeEventListener('mouseout', mouseOut);
+    e.target.removeEventListener('click', gameBoard_drawLine);
+    e.target.classList.add('colored_in');
+    
+    gameBoard.grid[0].drawLine();
+}
 window.onload = function(){    
     document.querySelector('#player1').addEventListener('input', setPlayer);
     document.querySelector('#player2').addEventListener('input', setPlayer);  
