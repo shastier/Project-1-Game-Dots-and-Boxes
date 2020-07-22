@@ -156,7 +156,7 @@ function setGrid(e){
                 const line_horiz_div = document.createElement('div');
                 line_horiz_div.className = "horizontal_line"
                 line_horiz_div.setAttribute('id',`${i},${j}`);
-                line_horiz_div.innerHTML = `${i},${j}`;
+              //  line_horiz_div.innerHTML = `${i},${j}`;
                 grid_table.appendChild(line_horiz_div);
             }
         }
@@ -166,7 +166,7 @@ function setGrid(e){
                 const line_vertical_div = document.createElement('div');
                 line_vertical_div.className = "vertical_line";   
                 line_vertical_div.setAttribute('id',`${i},${k}`);
-                line_vertical_div.innerHTML = `${i},${k}`;
+               // line_vertical_div.innerHTML = `${i},${k}`;
                 grid_table.appendChild(line_vertical_div);
 
                 if(k != gridSize){
@@ -174,7 +174,7 @@ function setGrid(e){
                     const box = document.createElement('div');
                     box.className = "box";   
                     box.setAttribute('id',`${i},${k}`);
-                    box.innerHTML = `${i},${k}`;
+                    //box.innerHTML = `${i},${k}`;
                     grid_table.appendChild(box);
                 }
             }
@@ -183,6 +183,7 @@ function setGrid(e){
     //show grid:
     body.appendChild(grid_table);
 };
+
 window.onload = function(){    
     document.querySelector('#player1').addEventListener('input', setPlayer);
     document.querySelector('#player2').addEventListener('input', setPlayer);  

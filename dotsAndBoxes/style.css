@@ -63,7 +63,7 @@ label {
   flex-wrap: wrap;
   height: 130px;
   width: 130px;  
-  margin: 0 auto;
+  margin: 80px auto;
 }
 .dot {
   display: flex;
@@ -71,18 +71,18 @@ label {
   width: 10px;
   border-radius: 5px;
   background-color: black;  
-  }
+}
 .vertical_line {
   display: flex;
   height: 50px;
   width: 5px;  
-  background-color: black;    
+    
 }
 .horizontal_line {
   display: flex;
   height: 5px;
   width: 50px;  
-  background-color: black;   
+    
 }
 .box {
   display: flex;
