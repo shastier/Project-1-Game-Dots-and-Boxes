@@ -28,11 +28,14 @@ class GameBoard {
             this.playerTurn ++;
         }
     };
-    play(){
-        //call grid and draw a line
+    play(lineId, lineType){        
+        const choice = new Choice(lineId, lineType);
         const gameGrid = this.grid[0];
+        const player = this.players[this.getPlayerTurn()];                
+        player.setChoice(choice); 
+        
+        gameGrid.drawLine(player);
 
-        gameGrid.drawLine();
         //if, no new box was created, setPlayerTurn
         if (gameGrid.getNewBox()=== null) {
             this.setPlayerTurn(this.getPlayerTurn());
@@ -60,6 +63,7 @@ class Player {
         this.name = name;
         this.color = 'black';
         this.points = 0;
+        this.choice = null;
     };
     getName(){
         return this.name;
@@ -76,6 +80,12 @@ class Player {
     setPoints(point){
         this.points += point;
     };
+    getChoice(){
+        return this.choice;
+    };
+    setChoice(choice) {
+        this.choice = choice;
+    };
 }
 class Grid {
     constructor(row, column){
@@ -91,7 +101,7 @@ class Grid {
         return this.column;
     };
     drawLine(player){
-        alert('Draw Line');
+        alert(`Draw Line for ${player.getName()}`);
         // if there is a new box, addBox
     };
     getNewBox(){
@@ -107,12 +117,32 @@ class Grid {
     };
     isFull(){
         const totalBoxes = (this.row-1) * (this.column-1);
-
         return(this.boxes.length === totalBoxes);
     }
 }
 class Box {
 
+}
+class Choice {
+    constructor(id, lineType) {
+        this.id = id;
+        if (lineType === 'vertical') {            
+            this.vertical = true;            
+            this.horizontal = false;
+        } else {            
+            this.vertical = false;
+            this.horizontal = true;            
+        }
+    };
+    getId(){
+        return this.id;
+    };
+    isVertical(){        
+        return this.vertical;
+    };
+    isHorizontal(){
+        return this.horizontal;
+    };
 }
 const gameBoard = new GameBoard();
 
@@ -249,7 +279,12 @@ function gameBoard_drawLine(e) {
     const color = gameBoard.players[gameBoard.getPlayerTurn()].getColor();    
     e.target.style.backgroundColor = color;
     
-    gameBoard.play();    
+    //line. Player's choice
+    const className = e.target.className;
+    const lineType = className.substr(0, 8); //horizont or vertical
+    const lineId = e.target.id;
+
+    gameBoard.play(lineId, lineType);    
 }
 window.onload = function(){    
     document.querySelector('#player1').addEventListener('input', setPlayer);
