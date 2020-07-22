@@ -78,11 +78,19 @@ label {
   width: 5px;  
     
 }
+.vertical_line.colored_in {
+  cursor: pointer;
+  background-color: black;
+}
 .horizontal_line {
   display: flex;
   height: 5px;
   width: 50px;  
-    
+  
+}
+.horizontal_line.colored_in {
+  cursor: pointer;
+  background-color: black;
 }
 .box {
   display: flex;

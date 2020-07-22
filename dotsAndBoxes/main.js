@@ -156,6 +156,8 @@ function setGrid(e){
                 const line_horiz_div = document.createElement('div');
                 line_horiz_div.className = "horizontal_line"
                 line_horiz_div.setAttribute('id',`${i},${j}`);
+                line_horiz_div.addEventListener('mouseover', mouseOver);
+                line_horiz_div.addEventListener('mouseout', mouseOut);
               //  line_horiz_div.innerHTML = `${i},${j}`;
                 grid_table.appendChild(line_horiz_div);
             }
@@ -166,6 +168,8 @@ function setGrid(e){
                 const line_vertical_div = document.createElement('div');
                 line_vertical_div.className = "vertical_line";   
                 line_vertical_div.setAttribute('id',`${i},${k}`);
+                line_vertical_div.addEventListener('mouseover', mouseOver);
+                line_vertical_div.addEventListener('mouseout', mouseOut);
                // line_vertical_div.innerHTML = `${i},${k}`;
                 grid_table.appendChild(line_vertical_div);
 
@@ -183,6 +187,12 @@ function setGrid(e){
     //show grid:
     body.appendChild(grid_table);
 };
+function mouseOver(e) {
+    e.target.classList.add('colored_in');
+}
+function mouseOut(e) {
+    e.target.classList.remove('colored_in');
+}
 
 window.onload = function(){    
     document.querySelector('#player1').addEventListener('input', setPlayer);
