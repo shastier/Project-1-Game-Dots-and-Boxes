@@ -29,12 +29,6 @@ input {
   align-content: center;
   text-align: center;
 }
-#player1 {
-  color: blue;
-}
-#player2 {
-  color: green;
-}
 label {
   color: red;
 }

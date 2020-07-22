@@ -2,6 +2,7 @@ class GameBoard {
     constructor(){
         this.players = [];
         this.grid = [];
+        this.playerTurn = 0;
     };
     getPlayers(){
         return this.players;
@@ -16,6 +17,12 @@ class GameBoard {
     };
     setGrid(grid){
         this.grid.push(grid);
+    };
+    getPlayerTurn() {
+        return this.playerTurn;
+    };
+    setPlayerTurn(turn) {
+        this.playerTurn = turn;
     };
     play(){
         alert("Time to play!");
@@ -115,6 +122,8 @@ function setGrid(e){
         }
     }   
     //update screen to wireframe b.    
+    //setPayer's turn:
+    gameBoard.setPlayerTurn(0);
     const main = document.getElementsByClassName('main');
     for (let i = 0; i < main.length; i++) {
         main[i].remove();                
@@ -122,8 +131,9 @@ function setGrid(e){
     const instructions_div = document.createElement('div');
     instructions_div.className = 'instructions';
     const playerX_h2 = document.createElement('h2');
-    playerX_h2.setAttribute('id', 'player1');
-    playerX_h2.innerHTML = gameBoard.players[0].getName();
+    playerX_h2.setAttribute('id', 'player_in_turn');
+    playerX_h2.style.color = gameBoard.players[gameBoard.playerTurn].getColor();
+    playerX_h2.innerHTML = gameBoard.players[gameBoard.getPlayerTurn()].getName();
     instructions_div.appendChild(playerX_h2);
 
     const instruction_p = document.createElement('p');
@@ -198,8 +208,10 @@ function mouseOut(e) {
 function gameBoard_drawLine(e) {
     e.target.removeEventListener('mouseover', mouseOver);
     e.target.removeEventListener('mouseout', mouseOut);
-    e.target.removeEventListener('click', gameBoard_drawLine);
-    e.target.classList.add('colored_in');
+    e.target.removeEventListener('click', gameBoard_drawLine);   
+
+    const color = gameBoard.players[gameBoard.getPlayerTurn()].getColor();    
+    e.target.style.backgroundColor = color;
     
     gameBoard.grid[0].drawLine();
 }
