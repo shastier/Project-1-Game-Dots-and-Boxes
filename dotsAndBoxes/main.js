@@ -142,21 +142,32 @@ class Grid {
         } else {
            // Line is interior, two boxes will be affected.
            if (choice.isVertical()) {
-            let leftBoxId = "";
-            let leftBoxSide = "";
-            let rightBoxId = lineId;
-            let rightBoxSide = 'leftLine';
+                let leftBoxId = "";
+                let leftBoxSide = "";
+                let rightBoxId = lineId;
+                let rightBoxSide = 'leftLine';
 
-            this.setOpenBoxes(rightBoxId, rightBoxSide, player);
+                this.setOpenBoxes(rightBoxId, rightBoxSide, player);
 
-            const tempId = lineId.slice(0,2);
-            const idChar2 = (parseInt(lineId[2]) - 1).toString();                    
-            leftBoxId = tempId.concat(idChar2);
-            leftBoxSide = 'rightLine';
+                const tempId = lineId.slice(0,2);
+                const idChar2 = (parseInt(lineId[2]) - 1).toString();                    
+                leftBoxId = tempId.concat(idChar2);
+                leftBoxSide = 'rightLine';
 
-            this.setOpenBoxes(leftBoxId, leftBoxSide, player);
+                this.setOpenBoxes(leftBoxId, leftBoxSide, player);
            } else { // is horizontal
-               
+                let topBoxId = "";
+                let topBoxSide = 'bottomLine';
+                let bottomBoxId = lineId;
+                let bottomBoxSide = 'topLine';
+                
+                this.setOpenBoxes(bottomBoxId, bottomBoxSide, player);
+
+                const idChar1 = (parseInt(lineId[0]) - 1).toString();
+                const tempId = lineId.slice(1,3);
+                topBoxId = idChar1.concat(tempId);
+
+                this.setOpenBoxes(topBoxId, topBoxSide, player);
            }
         }
         console.log(`last Num. Boxes: ${this.lastNumBoxes}`);
@@ -189,7 +200,7 @@ class Grid {
                 this.openBoxes[i].setLine(side);  
                 if (this.openBoxes[i].isBoxClosed()) {
                     const closedBox = this.openBoxes.splice(i,i+1);
-                    closedBox.setOwnerPlayer(player);
+                    closedBox[i].setOwnerPlayer(player);
                     this.setClosedBoxes(closedBox);
                 }
                 boxIndex = i;                        
