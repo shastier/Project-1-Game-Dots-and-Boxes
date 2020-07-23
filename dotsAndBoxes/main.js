@@ -93,6 +93,7 @@ class Grid {
         this.row = row;
         this.column = column;
         this.closedBoxes = [];   
+        this.openBoxes = [];
         this.lastNumBoxes = 0;     
     };
     getRow(){
@@ -106,11 +107,37 @@ class Grid {
         const choice = player.getChoice();
         console.log(choice);
         const isBorder = choice.isBorderLine(this.row, this.column);
-        alert(`That line isBorderLine? ${isBorder}`);
-        // find out how many boxes will be affected. 
-        // if line is borderLine: only one box.
-        // else, two boxes will be affected. 
-        // call choice.isBorderLine(this.row, this.column);
+       // alert(`That line isBorderLine? ${isBorder}`);
+        const lineId = choice.getId(); //string Ex. ["2,3"]
+        let boxId = "";
+        
+        //Get boxID
+        // if line is borderLine: only one box will be afected.
+        if (isBorder) {            
+            // if border line && vertical
+            if (choice.isVertical()) {            
+                if ((parseInt(lineId[2])) != 1) {                    
+                    const tempId = lineId.slice(0,2);
+                    const idChar2 = (parseInt(lineId[2]) - 1).toString();                    
+                    boxId = tempId.concat(idChar2);
+                } else {
+                    boxId = lineId;
+                }
+            } else if(choice.isHorizontal()){
+                if (parseInt(lineId[0]) != 1 ) {                    
+                    const idChar1 = (parseInt(lineId[0]) - 1).toString();
+                    const tempId = lineId.slice(1,3);
+                    boxId = idChar1.concat(tempId);
+                } else {
+                    boxId = lineId;
+                }
+            }               
+        } else {
+           // Line is interior, two boxes will be affected.  
+        }
+        console.log(`Box ID: ${boxId}`);   
+        console.log(typeof(boxId));
+        // find out if the box was already created. add it choiceline.
         // if there is a new box, addBox
     };
     getNewBox(){
@@ -124,13 +151,80 @@ class Grid {
     getClosedBoxes(){
         return this.closedBoxes;
     };
+    setClosedBoxes(box) {
+        if (box.isBoxClosed()) {
+            this.closedBoxes.push(box);
+            this.lastNumBoxes ++;
+        }
+    }
+    getOpenBoxes() {
+        return this.openBoxes;
+    }
+    setOpenBoxes(box) {
+        if (!box.isBoxClosed()) {
+            this.openBoxes.push(box);
+        }else{
+            for (let i = 0; i < this.openBoxes.length; i++) {
+                if (this.openBoxes[i].getId() === box.getId()) {
+                    this.openBoxes.splice(i,i+1);
+                }                
+            }     
+        }
+    }
     isFull(){
         const totalBoxes = (this.row-1) * (this.column-1);
         return(this.closedBoxes.length === totalBoxes);
     }
 }
 class Box {
-
+    constructor(id){
+        this.id = id;
+        this.topLine = false;
+        this.bottomLine = false;
+        this.rightLine = false;
+        this.leftLine = false;
+        this.ownerPlayer = null;
+    }
+    getId() {
+        return this.id;
+    }
+    setId(id) {
+        this.id = id;
+    }
+    isTopLine() {
+        return this.topLine;
+    }
+    setTopLine(topLine) {
+        this.topLine = topLine;
+    }
+    isBottomLine() {
+        return this.bottomLine;
+    }
+    setBottomLine(bottomLine) {
+        this.bottomLine = bottomLine;
+    }    
+    isRightLine() {
+        return this.rightLine;
+    }
+    setRightLine(rightLine) {
+        this.rightLine = rightLine;
+    }
+    isLeftLine() {
+        return this.leftLine;
+    }
+    setLeftLine(leftLine) {
+        this.leftLine = leftLine;
+    }
+    getOwnerPlayer() {
+        return this.ownerPlayer;
+    }
+    setOwnerPlayer(ownerPlayer) {
+        this.ownerPlayer = ownerPlayer;
+    }
+    isBoxClosed(){
+        return (this.topLine && this.bottomLine && 
+                this.rightLine && this.leftLine);
+    }
 }
 class Choice {
     constructor(id, lineType) {
