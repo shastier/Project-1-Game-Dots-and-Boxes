@@ -141,9 +141,11 @@ class Grid {
            // Line is interior, two boxes will be affected.  
         }
         console.log(`Box ID: ${boxId}, Line Side: ${boxLineSide}`);        
-        // find out if the box was already created. add it choiceline.
-
+        // find out if the box was already created. add choiceline.
         // if there is a new box, set up ownerPlayer and addBox 
+        this.setOpenBoxes(boxId, boxLineSide, player);
+        console.log(this.lastNumBoxes);
+        console.log(this.openBoxes);
     };
     getNewBox(){
         if(this.closedBoxes.length === this.lastNumBoxes){
@@ -165,21 +167,30 @@ class Grid {
     getOpenBoxes() {
         return this.openBoxes;
     }
-    setOpenBoxes(box) {
-        if (!box.isBoxClosed()) {
+    setOpenBoxes(id, side, player) {
+        let boxIndex = -1;        
+        for (let i = 0; i < this.openBoxes.length; i++) {
+            if (this.openBoxes[i].getId() === id) { 
+                this.openBoxes[i].setLine(side);  
+                if (this.openBoxes[i].isBoxClosed()) {
+                    const closedBox = this.openBoxes.splice(i,i+1);
+                    closedBox.setOwnerPlayer(player);
+                    this.setClosedBoxes(closedBox);
+                }
+                boxIndex = i;                        
+            }
+        }  
+
+        if (boxIndex === -1) { //new open box
+            const box = new Box(id);
+            box.setLine(side);
             this.openBoxes.push(box);
-        }else{
-            for (let i = 0; i < this.openBoxes.length; i++) {
-                if (this.openBoxes[i].getId() === box.getId()) {
-                    this.openBoxes.splice(i,i+1);
-                }                
-            }     
         }
     }
     isFull(){
         const totalBoxes = (this.row-1) * (this.column-1);
         return(this.closedBoxes.length === totalBoxes);
-    }
+    }    
 }
 class Box {
     constructor(id){
@@ -229,6 +240,24 @@ class Box {
     isBoxClosed(){
         return (this.topLine && this.bottomLine && 
                 this.rightLine && this.leftLine);
+    }
+    setLine(side){
+        switch (side) {
+            case 'rightLine':
+                this.setRightLine(true);
+                break;
+            case 'leftLine':
+                this.setLeftLine(true);
+                break;    
+            case 'bottomLine':
+                this.setBottomLine(true);
+                break;
+            case 'topLine':
+                this.setTopLine(true);
+                break;                     
+            default:
+                break;
+        }
     }
 }
 class Choice {
