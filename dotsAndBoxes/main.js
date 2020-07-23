@@ -110,7 +110,8 @@ class Grid {
        // alert(`That line isBorderLine? ${isBorder}`);
         const lineId = choice.getId(); //string Ex. ["2,3"]
         let boxId = "";
-        
+        let boxLineSide = "";
+
         //Get boxID
         // if line is borderLine: only one box will be afected.
         if (isBorder) {            
@@ -120,25 +121,29 @@ class Grid {
                     const tempId = lineId.slice(0,2);
                     const idChar2 = (parseInt(lineId[2]) - 1).toString();                    
                     boxId = tempId.concat(idChar2);
+                    boxLineSide = 'rightLine';
                 } else {
                     boxId = lineId;
+                    boxLineSide = 'leftLine';
                 }
             } else if(choice.isHorizontal()){
                 if (parseInt(lineId[0]) != 1 ) {                    
                     const idChar1 = (parseInt(lineId[0]) - 1).toString();
                     const tempId = lineId.slice(1,3);
                     boxId = idChar1.concat(tempId);
+                    boxLineSide = 'bottomLine';
                 } else {
                     boxId = lineId;
+                    boxLineSide = 'topLine';
                 }
             }               
         } else {
            // Line is interior, two boxes will be affected.  
         }
-        console.log(`Box ID: ${boxId}`);   
-        console.log(typeof(boxId));
+        console.log(`Box ID: ${boxId}, Line Side: ${boxLineSide}`);        
         // find out if the box was already created. add it choiceline.
-        // if there is a new box, addBox
+
+        // if there is a new box, set up ownerPlayer and addBox 
     };
     getNewBox(){
         if(this.closedBoxes.length === this.lastNumBoxes){
