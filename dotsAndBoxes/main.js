@@ -2,7 +2,7 @@ class GameBoard {
     constructor(){
         this.players = [];
         this.grid = [];
-        this.playerTurn = 0;
+        this.playerTurn = 0;        
     };
     getPlayers(){
         return this.players;
@@ -38,15 +38,18 @@ class GameBoard {
         gameGrid.drawLine(player);
 
         //if, no new box was created, setPlayerTurn
-        if (gameGrid.getNewBox()=== null) {            
+        //get an array of new_boxes
+        const newBoxes = gameGrid.getNewBoxes();
+        if (newBoxes === null) {
             this.setPlayerTurn(this.getPlayerTurn());
             // update instructions <h2> to updated player in turn.
             updateInstructionsPlayerInTurn();
         } else {
             // grid is full. 
             if (gameGrid.isFull()) {
-                //show wireframe e
+                //show wireframe e & update closed boxes on screen.
             } else {
+                //work with newBoxes[]. Show them on screen.
             // show wireframe d.
             // current player keep playing. No need to setPlayerTurn.
             // update <p> "closed a Box and is your turn to play!" on class instructions <div>
@@ -102,13 +105,11 @@ class Grid {
     getColumn(){
         return this.column;
     };
-    drawLine(player){
-      //  alert(`Draw Line for ${player.getName()}`);
+    drawLine(player){      
         const choice = player.getChoice();        
-        const isBorder = choice.isBorderLine(this.row, this.column);
-       // alert(`That line isBorderLine? ${isBorder}`);
+        const isBorder = choice.isBorderLine(this.row, this.column);       
         const lineId = choice.getId();
-        //Get boxID
+        
         // if line is borderLine: only one box will be afected.
         if (isBorder) {   
             let boxId = "";
@@ -169,16 +170,19 @@ class Grid {
 
                 this.setOpenBoxes(topBoxId, topBoxSide, player);
            }
-        }
-        console.log(`last Num. Boxes: ${this.lastNumBoxes}`);
+        }        
         console.log(this.openBoxes);
     };
-    getNewBox(){
-        if(this.closedBoxes.length === this.lastNumBoxes){
+    getNewBoxes(){        
+        if((this.closedBoxes.length - this.lastNumBoxes) === 0){
             return null;
         }else{
-            this.lastNumBoxes ++;
-            return this.closedBoxes[this.closedBoxes.length-1];
+            let newBoxes = [];
+            for (let i = lastNumBoxes; i < this.closedBoxes.length; i++) {                
+                newBoxes.push(this.closedBoxes[i]);
+                this.lastNumBoxes ++;
+            }            
+            return newBoxes;
         }
     };
     getClosedBoxes(){
