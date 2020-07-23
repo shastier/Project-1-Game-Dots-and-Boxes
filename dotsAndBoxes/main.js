@@ -104,17 +104,15 @@ class Grid {
     };
     drawLine(player){
       //  alert(`Draw Line for ${player.getName()}`);
-        const choice = player.getChoice();
-        console.log(choice);
+        const choice = player.getChoice();        
         const isBorder = choice.isBorderLine(this.row, this.column);
        // alert(`That line isBorderLine? ${isBorder}`);
-        const lineId = choice.getId(); //string Ex. ["2,3"]
-        let boxId = "";
-        let boxLineSide = "";
-
+        const lineId = choice.getId();
         //Get boxID
         // if line is borderLine: only one box will be afected.
-        if (isBorder) {            
+        if (isBorder) {   
+            let boxId = "";
+            let boxLineSide = "";
             // if border line && vertical
             if (choice.isVertical()) {            
                 if ((parseInt(lineId[2])) != 1) {                    
@@ -136,15 +134,32 @@ class Grid {
                     boxId = lineId;
                     boxLineSide = 'topLine';
                 }
-            }               
+            }
+            // find out if the box was already created. add choiceline.
+            // if there is a new box, set up ownerPlayer and addBox 
+            this.setOpenBoxes(boxId, boxLineSide, player);
+            console.log(`Box ID: ${boxId}, Line Side: ${boxLineSide}`);
         } else {
-           // Line is interior, two boxes will be affected.  
+           // Line is interior, two boxes will be affected.
+           if (choice.isVertical()) {
+            let leftBoxId = "";
+            let leftBoxSide = "";
+            let rightBoxId = lineId;
+            let rightBoxSide = 'leftLine';
+
+            this.setOpenBoxes(rightBoxId, rightBoxSide, player);
+
+            const tempId = lineId.slice(0,2);
+            const idChar2 = (parseInt(lineId[2]) - 1).toString();                    
+            leftBoxId = tempId.concat(idChar2);
+            leftBoxSide = 'rightLine';
+
+            this.setOpenBoxes(leftBoxId, leftBoxSide, player);
+           } else { // is horizontal
+               
+           }
         }
-        console.log(`Box ID: ${boxId}, Line Side: ${boxLineSide}`);        
-        // find out if the box was already created. add choiceline.
-        // if there is a new box, set up ownerPlayer and addBox 
-        this.setOpenBoxes(boxId, boxLineSide, player);
-        console.log(this.lastNumBoxes);
+        console.log(`last Num. Boxes: ${this.lastNumBoxes}`);
         console.log(this.openBoxes);
     };
     getNewBox(){
