@@ -21,10 +21,11 @@ class GameBoard {
     getPlayerTurn() {
         return this.playerTurn;
     };
-    setPlayerTurn(turn) {
-        if (turn === this.players.length-1) {
-            this.playerTurn --;
-        } else {
+    setPlayerTurn(turn) {  
+        this.playerTurn = turn;        
+        if (turn === (this.players.length)-1) {
+            this.playerTurn --;            
+        } else {            
             this.playerTurn ++;
         }
     };
@@ -37,7 +38,7 @@ class GameBoard {
         gameGrid.drawLine(player);
 
         //if, no new box was created, setPlayerTurn
-        if (gameGrid.getNewBox()=== null) {
+        if (gameGrid.getNewBox()=== null) {            
             this.setPlayerTurn(this.getPlayerTurn());
             // update instructions <h2> to updated player in turn.
             updateInstructionsPlayerInTurn();
@@ -91,8 +92,8 @@ class Grid {
     constructor(row, column){
         this.row = row;
         this.column = column;
-        this.boxes = [];
-        this.lastNumBoxes = 0;
+        this.closedBoxes = [];   
+        this.lastNumBoxes = 0;     
     };
     getRow(){
         return this.row;
@@ -101,23 +102,31 @@ class Grid {
         return this.column;
     };
     drawLine(player){
-        alert(`Draw Line for ${player.getName()}`);
+      //  alert(`Draw Line for ${player.getName()}`);
+        const choice = player.getChoice();
+        console.log(choice);
+        const isBorder = choice.isBorderLine(this.row, this.column);
+        alert(`That line isBorderLine? ${isBorder}`);
+        // find out how many boxes will be affected. 
+        // if line is borderLine: only one box.
+        // else, two boxes will be affected. 
+        // call choice.isBorderLine(this.row, this.column);
         // if there is a new box, addBox
     };
     getNewBox(){
-        if(this.boxes.length === this.lastNumBoxes){
+        if(this.closedBoxes.length === this.lastNumBoxes){
             return null;
         }else{
             this.lastNumBoxes ++;
-            return this.boxes[this.boxes.length-1];
+            return this.closedBoxes[this.closedBoxes.length-1];
         }
     };
-    getBoxes(){
-        return this.boxes;
+    getClosedBoxes(){
+        return this.closedBoxes;
     };
     isFull(){
         const totalBoxes = (this.row-1) * (this.column-1);
-        return(this.boxes.length === totalBoxes);
+        return(this.closedBoxes.length === totalBoxes);
     }
 }
 class Box {
@@ -132,7 +141,7 @@ class Choice {
         } else {            
             this.vertical = false;
             this.horizontal = true;            
-        }
+        };        
     };
     getId(){
         return this.id;
@@ -142,6 +151,15 @@ class Choice {
     };
     isHorizontal(){
         return this.horizontal;
+    };
+    isBorderLine(row, column){        
+        if (this.isHorizontal()) {
+            const firstCharId = parseInt(this.id[0]);
+            return (firstCharId === 1 || firstCharId === row);
+        } else {
+            const secondCharId = parseInt(this.id[2]);            
+            return (secondCharId === 1 || secondCharId === column);
+        }               
     };
 }
 const gameBoard = new GameBoard();
@@ -189,7 +207,7 @@ function setGrid(e){
     }   
     //update screen to wireframe b.    
     //setPayer's turn:
-    gameBoard.setPlayerTurn(0);
+    gameBoard.setPlayerTurn(1);
     const main = document.getElementsByClassName('main');
     for (let i = 0; i < main.length; i++) {
         main[i].remove();                
@@ -262,7 +280,7 @@ function setGrid(e){
             }
         }
     }  
-    //show grid:
+    //show grid:    
     body.appendChild(grid_table);
 };
 function mouseOver(e) {
