@@ -63,10 +63,9 @@ class GameBoard {
             msg = "Tied Game!";
         } else {
             if (player1.getPoints() > player2.getPoints()) {
-                msg = `${player1.getName()} won with ${player1.getPoints()} points! Vs ${player2.getName()}: ${player2.getPoints()} points`;
-
+                msg = `${player1.getName()} won!`;
             } else {
-                msg =`${player2.getName()} won with ${player2.getPoints()} points! Vs ${player1.getName()}: ${player1.getPoints()} points`;
+                msg =`${player2.getName()} won!`;
             }
         }
         updateInstructionsGameGridIsFull(msg);
@@ -346,9 +345,39 @@ function updateInstructionsGameGridIsFull(results){
     const playerX_h2 = document.getElementById('player_in_turn');
     playerX_h2.style.color = "black";
     playerX_h2.innerHTML = results;
-
+    
+    //remove <p>
     const p = document.getElementsByTagName('p');
     p[0].remove();
+
+    //Add a division with two buttons (Play & Restart) to div's class instructions.
+    const instructions_div = document.getElementsByClassName('instructions');
+    
+    const btns_div = document.createElement('div');
+    btns_div.className = "btns_div";
+    instructions_div[0].append(btns_div);
+
+    const play_btn = document.createElement('button');
+    const restart_btn = document.createElement('button');
+    play_btn.innerHTML = "Play";
+    restart_btn.innerHTML = "Restart";
+    
+    btns_div.append(play_btn);
+    btns_div.append(restart_btn);
+
+    // const body = document.querySelector('body');
+    // const footer = document.createElement('footer');
+    // footer.style.backgroundColor = "black";
+    // body.append(footer);
+    
+
+    //Play, show initial three grids types to keep playing. Requirement: preserve 
+    // status of current grid size and results with player's names.
+
+    //Restart. Reset game status to its original state.
+
+    // Add a section at the bottom to show a link: "Results section"
+    // Style: background color: black
 }
 function updateInstructionsPlayerClosedBox(closedBoxes){
    // alert('Dom');

@@ -94,3 +94,12 @@ label {
   align-items: center;
   font-size: xx-large;
 }
+.btns_div {
+  max-width: 400px;
+  height: 50px;
+  display: flex;
+  justify-content: space-around;  
+}
+button {
+  display: flex;  
+}
