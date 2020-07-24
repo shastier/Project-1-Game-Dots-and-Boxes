@@ -167,7 +167,7 @@ class Grid {
                 this.setOpenBoxes(topBoxId, topBoxSide, player);
            }
         }        
-        console.log(this.openBoxes);
+      //  console.log(this.openBoxes);
     };
     getNewBoxes(){        
         if((this.closedBoxes.length - this.lastNumBoxes) === 0){
@@ -200,7 +200,14 @@ class Grid {
                 this.openBoxes[i].setLine(side);  
                 if (this.openBoxes[i].isBoxClosed()) {
                     const closedBox = this.openBoxes[i];
-                    this.openBoxes.splice(i,i+1);
+                    let open_boxes = this.openBoxes.filter(function (e) {
+                        if (e.getId() != closedBox.getId()) {
+                            return e;
+                        }
+                    });
+                    this.setOpenBoxes(open_boxes);
+                    //this.openBoxes.splice(i,i+1);
+                    player.setPoints(1);
                     closedBox.setOwnerPlayer(player);
                     this.setClosedBoxes(closedBox);
                 }
@@ -335,13 +342,10 @@ function updateInstructionsPlayerClosedBox(closedBoxes){
         const boxWinner = closedBoxes[i].getOwnerPlayer();
         box.innerHTML = boxWinner.getName();
         box.style.color = boxWinner.getColor();
-    }
+        box.style.justifyContent = 'center';
 
-                // show wireframe d.
-            // current player keep playing. No need to setPlayerTurn.
-            // update <p> "closed a Box and is your turn to play!" on class instructions <div>
-            // update current Box's (by id) innerHTML to:  currrent player's name
-            // set Box's font color to: current player's color.
+        console.log(`${boxWinner.getName()} has: ${boxWinner.getPoints()} points!`);
+    }                
 };
 function updateInstructionsPlayerInTurn(){
     const playerX_h2 = document.getElementById('player_in_turn');
