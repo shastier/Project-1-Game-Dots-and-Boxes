@@ -47,15 +47,29 @@ class GameBoard {
         } else {
             // grid is full. 
             if (gameGrid.isFull()) {
-                updateInstructionsGameGridIsFull();                
+              //  alert('grid is full');
+                updateInstructionsPlayerClosedBox(newBoxes);                               
             } else {                
                 //work with newBoxes[]. Show them on screen.
                 updateInstructionsPlayerClosedBox(newBoxes);
             }
         }        
     };
-    showResults(){
-        alert("Show results");
+    showResults(){        
+        const player1 = this.players[0];
+        const player2 = this.players[1];
+        let msg = "";
+        if (player1.getPoints() === player2.getPoints()) {
+            msg = "Tied Game!";
+        } else {
+            if (player1.getPoints() > player2.getPoints()) {
+                msg = `${player1.getName()} won with ${player1.getPoints()} points! Vs ${player2.getName()}: ${player2.getPoints()} points`;
+
+            } else {
+                msg =`${player2.getName()} won with ${player2.getPoints()} points! Vs ${player1.getName()}: ${player1.getPoints()} points`;
+            }
+        }
+        updateInstructionsGameGridIsFull(msg);
     };
 }
 class Player {
@@ -187,7 +201,7 @@ class Grid {
     setClosedBoxes(box) {
         if (box.isBoxClosed()) {
             this.closedBoxes.push(box);
-            this.lastNumBoxes ++;
+           // this.lastNumBoxes ++;
         }
     }
     getOpenBoxes() {
@@ -205,7 +219,8 @@ class Grid {
                             return e;
                         }
                     });
-                    this.setOpenBoxes(open_boxes);
+                    this.openBoxes = open_boxes;
+                //    this.setOpenBoxes(open_boxes);
                     //this.openBoxes.splice(i,i+1);
                     player.setPoints(1);
                     closedBox.setOwnerPlayer(player);
@@ -326,10 +341,17 @@ class Choice {
 const gameBoard = new GameBoard();
 
 //Manipulating the DOM functions.
-function updateInstructionsGameGridIsFull(){
-    //show wireframe e & update closed boxes on screen.
+function updateInstructionsGameGridIsFull(results){
+    //show wireframe e & update closed boxes on screen.    
+    const playerX_h2 = document.getElementById('player_in_turn');
+    playerX_h2.style.color = "black";
+    playerX_h2.innerHTML = results;
+
+    const p = document.getElementsByTagName('p');
+    p[0].remove();
 }
 function updateInstructionsPlayerClosedBox(closedBoxes){
+   // alert('Dom');
     for (let i = 0; i < closedBoxes.length; i++) {
         const playerX_h2 = document.getElementById('player_in_turn');
         playerX_h2.style.color = gameBoard.players[gameBoard.playerTurn].getColor();
@@ -345,7 +367,12 @@ function updateInstructionsPlayerClosedBox(closedBoxes){
         box.style.justifyContent = 'center';
 
         console.log(`${boxWinner.getName()} has: ${boxWinner.getPoints()} points!`);
-    }                
+    }
+    //if grid is full
+    const isFull = gameBoard.grid[0].isFull();
+    if (isFull) {
+        gameBoard.showResults();
+    }
 };
 function updateInstructionsPlayerInTurn(){
     const playerX_h2 = document.getElementById('player_in_turn');
