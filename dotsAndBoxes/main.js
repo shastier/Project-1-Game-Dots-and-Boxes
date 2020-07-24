@@ -40,7 +40,7 @@ class GameBoard {
         //if, no new box was created, setPlayerTurn
         //get an array of new_boxes
         const newBoxes = gameGrid.getNewBoxes();
-        if (newBoxes === null) {
+        if (newBoxes.length === 0) {            
             this.setPlayerTurn(this.getPlayerTurn());
             // update instructions <h2> to updated player in turn.
             updateInstructionsPlayerInTurn();
@@ -48,13 +48,9 @@ class GameBoard {
             // grid is full. 
             if (gameGrid.isFull()) {
                 //show wireframe e & update closed boxes on screen.
-            } else {
+            } else {                
                 //work with newBoxes[]. Show them on screen.
-            // show wireframe d.
-            // current player keep playing. No need to setPlayerTurn.
-            // update <p> "closed a Box and is your turn to play!" on class instructions <div>
-            // update current Box's (by id) innerHTML to:  currrent player's name
-            // set Box's font color to: current player's color.
+                updateInstructionsPlayerClosedBox(newBoxes);
             }
         }        
     };
@@ -97,7 +93,7 @@ class Grid {
         this.column = column;
         this.closedBoxes = [];   
         this.openBoxes = [];
-        this.lastNumBoxes = 0;     
+        this.closedBoxesIndex = 0;     
     };
     getRow(){
         return this.row;
@@ -139,7 +135,7 @@ class Grid {
             // find out if the box was already created. add choiceline.
             // if there is a new box, set up ownerPlayer and addBox 
             this.setOpenBoxes(boxId, boxLineSide, player);
-            console.log(`Box ID: ${boxId}, Line Side: ${boxLineSide}`);
+           // console.log(`Box ID: ${boxId}, Line Side: ${boxLineSide}`);
         } else {
            // Line is interior, two boxes will be affected.
            if (choice.isVertical()) {
@@ -171,16 +167,16 @@ class Grid {
                 this.setOpenBoxes(topBoxId, topBoxSide, player);
            }
         }        
-        console.log(this.openBoxes);
+     //   console.log(this.openBoxes);
     };
     getNewBoxes(){        
         if((this.closedBoxes.length - this.lastNumBoxes) === 0){
             return null;
         }else{
             let newBoxes = [];
-            for (let i = lastNumBoxes; i < this.closedBoxes.length; i++) {                
+            for (let i = this.closedBoxesIndex; i < this.closedBoxes.length; i++) {                
                 newBoxes.push(this.closedBoxes[i]);
-                this.lastNumBoxes ++;
+                this.closedBoxesIndex ++;
             }            
             return newBoxes;
         }
@@ -203,19 +199,21 @@ class Grid {
             if (this.openBoxes[i].getId() === id) { 
                 this.openBoxes[i].setLine(side);  
                 if (this.openBoxes[i].isBoxClosed()) {
-                    const closedBox = this.openBoxes.splice(i,i+1);
-                    closedBox[i].setOwnerPlayer(player);
+                    const closedBox = this.openBoxes[i];
+                    this.openBoxes.splice(i,i+1);
+                    closedBox.setOwnerPlayer(player);
                     this.setClosedBoxes(closedBox);
+                    //this.closedBoxes.push(closedBox);
+                    // this.setClosedBoxes(closedBox);
                 }
                 boxIndex = i;                        
             }
         }  
-
         if (boxIndex === -1) { //new open box
             const box = new Box(id);
             box.setLine(side);
             this.openBoxes.push(box);
-        }
+        }        
     }
     isFull(){
         const totalBoxes = (this.row-1) * (this.column-1);
@@ -323,6 +321,27 @@ class Choice {
 const gameBoard = new GameBoard();
 
 //Manipulating the DOM functions.
+function updateInstructionsPlayerClosedBox(closedBoxes){
+    for (let i = 0; i < closedBoxes.length; i++) {
+        const playerX_h2 = document.getElementById('player_in_turn');
+        playerX_h2.style.color = gameBoard.players[gameBoard.playerTurn].getColor();
+        playerX_h2.innerHTML = gameBoard.players[gameBoard.getPlayerTurn()].getName();
+    
+        const p = document.getElementsByTagName('p');
+        p.innerHTML = 'closed a Box and is your turn to play!';
+        
+        const box = document.getElementById(closedBoxes[i].getId());
+        const boxWinner = closedBoxes[i].getOwnerPlayer();
+        box.innerHTML = boxWinner.getName();
+        box.style.color = boxWinner.getColor();
+    }
+
+                // show wireframe d.
+            // current player keep playing. No need to setPlayerTurn.
+            // update <p> "closed a Box and is your turn to play!" on class instructions <div>
+            // update current Box's (by id) innerHTML to:  currrent player's name
+            // set Box's font color to: current player's color.
+};
 function updateInstructionsPlayerInTurn(){
     const playerX_h2 = document.getElementById('player_in_turn');
     
