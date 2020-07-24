@@ -51,6 +51,7 @@ label {
   justify-content: center;  
   align-items: center;
   flex-direction: row;  
+  cursor: pointer;
 }
 .grid3_table {
   display: flex;
@@ -95,11 +96,22 @@ label {
   font-size: xx-large;
 }
 .btns_div {
-  max-width: 400px;
+ 
   height: 50px;
   display: flex;
   justify-content: space-around;  
 }
 button {
   display: flex;  
+  font-family: 'Indie Flower', cursive;
+  align-items: center;
+  font-size: xx-large;
+  cursor: pointer;
+  border-radius: 16px;
+}
+footer {
+  background-color: black;
+  color: whitesmoke;    
+  height: 50px;     
+  cursor: pointer;  
 }

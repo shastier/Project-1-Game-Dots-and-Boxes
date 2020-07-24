@@ -359,16 +359,21 @@ function updateInstructionsGameGridIsFull(results){
 
     const play_btn = document.createElement('button');
     const restart_btn = document.createElement('button');
-    play_btn.innerHTML = "Play";
+    play_btn.innerHTML = "Play";    
     restart_btn.innerHTML = "Restart";
     
-    btns_div.append(play_btn);
     btns_div.append(restart_btn);
+    btns_div.append(play_btn);
+    
+    const body = document.querySelector('body');
+    const footer = document.createElement('footer');
+    footer.style.backgroundColor = "black";
+    body.append(footer);
 
-    // const body = document.querySelector('body');
-    // const footer = document.createElement('footer');
-    // footer.style.backgroundColor = "black";
-    // body.append(footer);
+    const results_h2 = document.createElement('h2');
+    results_h2.innerHTML = "Show results";
+    results_h2.style.textDecoration = "underline";
+    footer.append(results_h2);
     
 
     //Play, show initial three grids types to keep playing. Requirement: preserve 
