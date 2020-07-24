@@ -47,7 +47,7 @@ class GameBoard {
         } else {
             // grid is full. 
             if (gameGrid.isFull()) {
-                //show wireframe e & update closed boxes on screen.
+                updateInstructionsGameGridIsFull();                
             } else {                
                 //work with newBoxes[]. Show them on screen.
                 updateInstructionsPlayerClosedBox(newBoxes);
@@ -167,7 +167,7 @@ class Grid {
                 this.setOpenBoxes(topBoxId, topBoxSide, player);
            }
         }        
-     //   console.log(this.openBoxes);
+        console.log(this.openBoxes);
     };
     getNewBoxes(){        
         if((this.closedBoxes.length - this.lastNumBoxes) === 0){
@@ -203,8 +203,6 @@ class Grid {
                     this.openBoxes.splice(i,i+1);
                     closedBox.setOwnerPlayer(player);
                     this.setClosedBoxes(closedBox);
-                    //this.closedBoxes.push(closedBox);
-                    // this.setClosedBoxes(closedBox);
                 }
                 boxIndex = i;                        
             }
@@ -321,6 +319,9 @@ class Choice {
 const gameBoard = new GameBoard();
 
 //Manipulating the DOM functions.
+function updateInstructionsGameGridIsFull(){
+    //show wireframe e & update closed boxes on screen.
+}
 function updateInstructionsPlayerClosedBox(closedBoxes){
     for (let i = 0; i < closedBoxes.length; i++) {
         const playerX_h2 = document.getElementById('player_in_turn');
@@ -328,7 +329,7 @@ function updateInstructionsPlayerClosedBox(closedBoxes){
         playerX_h2.innerHTML = gameBoard.players[gameBoard.getPlayerTurn()].getName();
     
         const p = document.getElementsByTagName('p');
-        p.innerHTML = 'closed a Box and is your turn to play!';
+        p[0].innerHTML = 'closed a Box and is your turn to play!';
         
         const box = document.getElementById(closedBoxes[i].getId());
         const boxWinner = closedBoxes[i].getOwnerPlayer();
@@ -347,6 +348,9 @@ function updateInstructionsPlayerInTurn(){
     
     playerX_h2.style.color = gameBoard.players[gameBoard.playerTurn].getColor();
     playerX_h2.innerHTML = gameBoard.players[gameBoard.getPlayerTurn()].getName();
+
+    const p = document.getElementsByTagName('p');
+    p[0].innerHTML = 'is your turn to play!';
 };
 function setPlayer(e) {    
     let player = new Player(e.target.value);
