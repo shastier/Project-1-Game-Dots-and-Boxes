@@ -33,6 +33,7 @@ class GameBoard {
     play(lineId, lineType){        
         const choice = new Choice(lineId, lineType);
         const gameGrid = this.grid[this.grid.length-1];
+
         const player = this.players[this.getPlayerTurn()];                
         player.setChoice(choice); 
         
@@ -69,7 +70,34 @@ class GameBoard {
                 msg =`${player2.getName()} won!`;
             }
         }
+        // create new game record.
+        //make a copy of gamePlayers
+        const gamePlayers = [];
+        for (let i = 0; i < this.players.length; i++) {
+            const gamePlayer = new Player(this.players[i].getName());
+            gamePlayer.setColor(this.players[i].getColor());
+            gamePlayer.setPoints(this.players[i].getPoints());
+
+            gamePlayers.push(gamePlayer);
+        }
+        const gameRecord = new Result(this.grid[this.grid.length-1], gamePlayers);
+        this.setGames(gameRecord);
+
         updateInstructionsGameGridIsFull(msg);
+    };
+    resetPoints(){        
+        if (this.games.length != 0) {            
+            // re-set player's points to 0.
+            for (let i = 0; i < this.players.length; i++) {                
+                this.players[i].resetPoints(0);
+            }
+            this.games.forEach(game => {
+                console.log(`Game: ${game.getGridSize()}, P1: ${game.getPlayerPoints(1)}, P2: ${game.getPlayerPoints(2)}`);
+            });
+        }
+    };
+    setGames(game){
+        this.games.push(game);
     };
 }
 class Player {
@@ -93,6 +121,9 @@ class Player {
     };
     setPoints(point){
         this.points += point;
+    };
+    resetPoints(points){
+        this.points = points;
     };
     getChoice(){
         return this.choice;
@@ -465,7 +496,7 @@ function updateInstructionsPlayerClosedBox(closedBoxes){
         console.log(`${boxWinner.getName()} has: ${boxWinner.getPoints()} points!`);
     }
     //if grid is full
-    const isFull = gameBoard.grid[0].isFull();
+    const isFull = gameBoard.grid[gameBoard.grid.length-1].isFull();
     if (isFull) {
         gameBoard.showResults();
     }
@@ -497,6 +528,8 @@ function setGrid(e){
     const grid = new Grid(gridSize, gridSize);
         
     gameBoard.setGrid(grid);
+    alert('abut to reset Points');
+    gameBoard.resetPoints();  
     
     if (gameBoard.players.length < 2) {
         if (gameBoard.players.length === 0) {
