@@ -400,7 +400,26 @@ function gameBoard_Restart(e){
     //Restart. Reset game status to its original state.
 }
 function gameBoard_showResults(e){
-    alert('Results!');
+    alert('Results!');    
+    const results_h2 = document.getElementById('player_in_turn');
+    results_h2.innerHTML = "Results:";
+    results_h2.style.textDecoration = "underline";
+    results_h2.setAttribute('id', "resuts");
+
+    const grid_div = document.querySelector('.grid3_table');
+    const children_div = grid_div.querySelectorAll('div');
+
+    for (let i = 0; i < children_div.length; i++) {
+        children_div[i].remove();
+    }
+    
+    const showResults_footer = document.getElementsByTagName('footer');
+    showResults_footer[0].remove();
+
+    // switch div instructions element's position.
+
+    //create new div with class "grid3_table" to hold result's elements table.
+
     //copied from restPoints() test console.log
     // this.games.forEach(game => {
     //     console.log(`Game: ${game.getGridSize()}, P1: ${game.getPlayerPoints(1)}, P2: ${game.getPlayerPoints(2)}`);
@@ -456,6 +475,7 @@ function playAgain(e){
         children[i].remove();        
     }
     const grid3_table = document.getElementsByClassName('grid3_table');
+    console.log(grid3_table);
     grid3_table[0].remove();
 
     const main_sec = document.createElement('section');
