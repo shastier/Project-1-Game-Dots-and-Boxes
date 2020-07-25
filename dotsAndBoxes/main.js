@@ -3,6 +3,7 @@ class GameBoard {
         this.players = [];
         this.grid = [];
         this.playerTurn = 0;        
+        this.games = [];
     };
     getPlayers(){
         return this.players;
@@ -31,7 +32,7 @@ class GameBoard {
     };
     play(lineId, lineType){        
         const choice = new Choice(lineId, lineType);
-        const gameGrid = this.grid[0];
+        const gameGrid = this.grid[this.grid.length-1];
         const player = this.players[this.getPlayerTurn()];                
         player.setChoice(choice); 
         
@@ -337,6 +338,29 @@ class Choice {
         }               
     };
 }
+class Result {
+    constructor(grid, players){
+        this.grid = grid;
+        this.players = players; //array
+    };
+    getGridSize(){
+        const gridSize = [];
+        gridSize.push(this.grid.getRow());
+        gridSize.push(this.grid.getColumn());
+
+        return gridSize;
+    };
+    getPlayerName(playerNumber){
+        if (playerNumber <= this.players.length && playerNumber >0) {
+            return this.players[playerNumber-1].getName();
+        }
+    };
+    getPlayerPoints(playerNumber){
+        if (playerNumber <= this.players.length && playerNumber >0) {
+            return this.players[playerNumber-1].getPoints();
+        }
+    };
+}
 const gameBoard = new GameBoard();
 
 //Manipulating the DOM functions.
@@ -420,14 +444,7 @@ function playAgain(e){
         size_div.innerHTML = `${i}x${i}`;
         size_div.addEventListener('click',setGrid);
         grids_div.appendChild(size_div);
-    }
-    //const play_btn = document.getElementById('play-btn');
-    // play_btn.remove();
-    // can be helpful: use function setGrid.
-    // add new grid size to gameBoard.grids[].
-    // check play implementation, should be with grids[grids.lenght-1];
-    // for each player, create a games record property, add total points to it and 
-    // re-set  total points.
+    }    
 }
 function updateInstructionsPlayerClosedBox(closedBoxes){
    // alert('Dom');
