@@ -395,6 +395,17 @@ class Result {
 const gameBoard = new GameBoard();
 
 //Manipulating the DOM functions.
+function gameBoard_Restart(e){
+    alert('Re-start!');
+    //Restart. Reset game status to its original state.
+}
+function gameBoard_showResults(e){
+    alert('Results!');
+    //copied from restPoints() test console.log
+    // this.games.forEach(game => {
+    //     console.log(`Game: ${game.getGridSize()}, P1: ${game.getPlayerPoints(1)}, P2: ${game.getPlayerPoints(2)}`);
+    // });
+}
 function updateInstructionsGameGridIsFull(results){
     //show wireframe e & update closed boxes on screen.    
     const playerX_h2 = document.getElementById('player_in_turn');
@@ -420,6 +431,7 @@ function updateInstructionsGameGridIsFull(results){
 
     restart_btn.setAttribute('id', 'restart-btn');
     restart_btn.innerHTML = "Restart";
+    restart_btn.addEventListener('click', gameBoard_Restart);
     
     btns_div.append(restart_btn);
     btns_div.append(play_btn);
@@ -432,16 +444,8 @@ function updateInstructionsGameGridIsFull(results){
     const results_h2 = document.createElement('h2');
     results_h2.innerHTML = "Show results";
     results_h2.style.textDecoration = "underline";
+    results_h2.addEventListener('click', gameBoard_showResults);
     footer.append(results_h2);
-    
-
-    //Play, show initial three grids types to keep playing. Requirement: preserve 
-    // status of current grid size and results with player's names.
-
-    //Restart. Reset game status to its original state.
-
-    // Add a section at the bottom to show a link: "Results section"
-    // Style: background color: black
 }
 function playAgain(e){
     const body_tags = document.getElementsByTagName('body');
