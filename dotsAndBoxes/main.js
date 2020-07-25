@@ -389,16 +389,25 @@ function updateInstructionsGameGridIsFull(results){
     // Style: background color: black
 }
 function playAgain(e){
+    const body_tags = document.getElementsByTagName('body');
+    const body_element = body_tags[0];   
+    const children = body_element.children;    
+
+    for (let i = 1; i < children.length; i++) {
+        children[i].remove();        
+    }
     const grid3_table = document.getElementsByClassName('grid3_table');
     grid3_table[0].remove();
 
-    const instructions_div = document.getElementsByClassName('instructions');
-
+    const main_sec = document.createElement('section');
+    main_sec.className = "main";
+    body_element.appendChild(main_sec);
+    
     const grids_div = document.createElement('div');
     grids_div.className = "grid-size";
     grids_div.style.marginTop = "20px";
     grids_div.style.marginBottom = "100px";
-    instructions_div[0].appendChild(grids_div);
+    main_sec.appendChild(grids_div);
 
     const instructions_h2 = document.createElement('h2');
     instructions_h2.innerHTML = "Select size of grid:";    
@@ -409,27 +418,16 @@ function playAgain(e){
         size_div.className = "grid";
         size_div.setAttribute('id', `x${i}`);
         size_div.innerHTML = `${i}x${i}`;
+        size_div.addEventListener('click',setGrid);
         grids_div.appendChild(size_div);
-    }              
-
-    const play_btn = document.getElementById('play-btn');
-    play_btn.remove();
-    //play_btn.removeEventListener('click', playAgain);
-    
-
-    // <div class="grid" id="x3">3x3</div>
-    // <div class="grid" id="x4">4x4</div>
-    // <div class="grid" id="x5">5x5</div>
-
-    //after btn div, add a div with class= "grid-size" and append 3 divs with 
-    //class name = "grid" and ID 'x3', 'x4', 'x5'
-    // add 'click' eventListener
+    }
+    //const play_btn = document.getElementById('play-btn');
+    // play_btn.remove();
     // can be helpful: use function setGrid.
     // add new grid size to gameBoard.grids[].
     // check play implementation, should be with grids[grids.lenght-1];
     // for each player, create a games record property, add total points to it and 
     // re-set  total points.
-    
 }
 function updateInstructionsPlayerClosedBox(closedBoxes){
    // alert('Dom');
@@ -480,7 +478,7 @@ function setPlayer(e) {
 function setGrid(e){
     const gridSize = parseInt(e.target.id.charAt(e.target.id.length-1));
     const grid = new Grid(gridSize, gridSize);
-    
+        
     gameBoard.setGrid(grid);
     
     if (gameBoard.players.length < 2) {
