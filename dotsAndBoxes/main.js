@@ -608,8 +608,9 @@ function playAgain(e){
         children[i].remove();        
     }
     const grid3_table = document.getElementsByClassName('grid3_table');
-    console.log(grid3_table);
-    grid3_table[0].remove();
+    if (grid3_table.length !=0 ) {
+        grid3_table[0].remove();    
+    }    
 
     const main_sec = document.createElement('section');
     main_sec.className = "main";
@@ -650,7 +651,7 @@ function updateInstructionsPlayerClosedBox(closedBoxes){
         box.style.color = boxWinner.getColor();
         box.style.justifyContent = 'center';
 
-        console.log(`${boxWinner.getName()} has: ${boxWinner.getPoints()} points!`);
+       // console.log(`${boxWinner.getName()} has: ${boxWinner.getPoints()} points!`);
     }
     //if grid is full
     const isFull = gameBoard.grid[gameBoard.grid.length-1].isFull();
