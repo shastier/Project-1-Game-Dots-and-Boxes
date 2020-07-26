@@ -434,7 +434,36 @@ function gameBoard_Restart(e){
     instruction_p.innerHTML = "Dots and Boxes is a pencil and paper game for two players. It was first published in the 19th century by French mathematician Edouard Lucas. The game starts with an empty grid of dots, the grid can be of any size between 3x3 dots and up to 5x5 dots. Players will take turns to connect two dots with an horizontal or vertical line, if a player can close a 1x1 box, it earns one point and takes another turn to play. The game ends when no more lines can be placed. The winner will be the player who was able to accumulate more points.";
     main_sec.appendChild(instruction_p);
 
-    
+    const playerInfo_div = document.createElement('div');
+    playerInfo_div.className = "playerInfo";
+    playerInfo_div.style.width = '400px';
+    playerInfo_div.display = "flex";
+    main_sec.appendChild(playerInfo_div);
+
+    const playerInfo_form = document.createElement('form');
+    playerInfo_form.setAttribute('id', 'form-playerInfo');
+    playerInfo_form.style.width = '400px';
+    playerInfo_form.style.display = "flex";
+    playerInfo_form.style.justifyContent = "space-around";    
+    playerInfo_div.appendChild(playerInfo_form);
+
+    const player1_input = document.createElement('input');
+    player1_input.setAttribute('type', 'text');
+    player1_input.setAttribute('name', 'player1');
+    player1_input.setAttribute('id', 'player1');    
+    player1_input.placeholder = "Player 1";
+    player1_input.style.display = "flex";
+    playerInfo_form.appendChild(player1_input);
+
+    const player2_input = document.createElement('input');
+    player2_input.setAttribute('type', 'text');
+    player2_input.setAttribute('name', 'player2');
+    player2_input.setAttribute('id', 'player2');    
+    player2_input.placeholder = "Player 2";
+    player2_input.style.display = "flex";
+    playerInfo_form.appendChild(player2_input);
+
+
 }
 function gameBoard_showResults(e){    
     const results_h2 = document.getElementById('player_in_turn');
