@@ -102,6 +102,12 @@ class GameBoard {
     getGames(){
         return this.games;
     };
+    restart(){
+        this.players = [];
+        this.grid = [];
+        this.playerTurn = 0;        
+        this.games = [];
+    };
 }
 class Player {
     constructor(name){
@@ -437,6 +443,7 @@ function gameBoard_Restart(e){
     const playerInfo_div = document.createElement('div');
     playerInfo_div.className = "playerInfo";
     playerInfo_div.style.width = '400px';
+    playerInfo_div.style.height = '225px';
     playerInfo_div.display = "flex";
     main_sec.appendChild(playerInfo_div);
 
@@ -463,7 +470,24 @@ function gameBoard_Restart(e){
     player2_input.style.display = "flex";
     playerInfo_form.appendChild(player2_input);
 
+    const gridSize_h2 = document.createElement('h2');
+    gridSize_h2.innerHTML = "Size of grid";
+    main_sec.appendChild(gridSize_h2);
 
+    const grids_div = document.createElement('div');
+    grids_div.className = "grid-size";
+    main_sec.appendChild(grids_div);
+
+    for (let i = 3; i <= 5; i++) {
+        const size_div = document.createElement('div');
+        size_div.className = "grid";
+        size_div.setAttribute('id', `x${i}`);
+        size_div.innerHTML = `${i}x${i}`;
+        size_div.addEventListener('click',setGrid);
+        grids_div.appendChild(size_div);
+    }
+
+    gameBoard.restart();
 }
 function gameBoard_showResults(e){    
     const results_h2 = document.getElementById('player_in_turn');
