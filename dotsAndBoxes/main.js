@@ -410,7 +410,8 @@ function gameBoard_showResults(e){
     results_h2.setAttribute('id', "resuts");
 
     const grid_div = document.querySelector('.grid3_table');
-    grid_div.style.width = "150px";
+    grid_div.style.width = "250px";
+    grid_div.style.fontSize = "30px"
     const children_div = grid_div.querySelectorAll('div');
 
     for (let i = 0; i < children_div.length; i++) {
@@ -429,21 +430,34 @@ function gameBoard_showResults(e){
 
     const names_div = document.createElement('div');
     names_div.innerHTML = `${games[0].getPlayerName(1)}   |   ${games[0].getPlayerName(2)}`;
-
+    names_div.style.borderBottom = "solid";
+    names_div.style.flexGrow = "1";
     grid_div.appendChild(names_div);
 
     for (let i = 0; i < games.length; i++) {
         total_p1 += games[i].getPlayerPoints(1);
         total_p2 += games[i].getPlayerPoints(2);
 
+        const game_div = document.createElement('div');
+        game_div.style.display = "flex";
+        grid_div.appendChild(game_div);
+
+        const size_div = document.createElement('div');
+        size_div.style.display = "flex";
+        size_div.innerHTML = `Game ${i+1}: [${games[i].getGridSize()}]`;
+        game_div.appendChild(size_div);
+
         const results_div = document.createElement('div');
         results_div.style.display = "flex";
-        results_div.innerHTML = `Game ${i+1}: [${games[i].getGridSize()}]     ${games[i].getPlayerPoints(1)}      |      ${games[i].getPlayerPoints(2)}`;
-        grid_div.appendChild(results_div);
+        results_div.style.flexGrow = "2";
+        results_div.innerHTML = `  ${games[i].getPlayerPoints(1)} | ${games[i].getPlayerPoints(2)}   `;
+        game_div.appendChild(results_div);
     }
 
     const total_div = document.createElement('div');
     total_div.innerHTML = "Total: ";
+    total_div.style.borderBottom = "solid";
+    total_div.style.flexGrow = "1";
     grid_div.appendChild(total_div);
     
     const total_p1_div = document.createElement('div');
