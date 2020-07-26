@@ -462,12 +462,12 @@ function gameBoard_showResults(e){
     
     const total_p1_div = document.createElement('div');
     total_p1_div.innerHTML = `${games[0].getPlayerName(1)}: ${total_p1} points`;
-    total_p1_div.style.color = games[0].players[0].getColor();
+    total_p1_div.style.color = games[0].players[0].getColor();    
     grid_div.appendChild(total_p1_div);
 
     const total_p2_div = document.createElement('div');
     total_p2_div.innerHTML = `${games[0].getPlayerName(2)}: ${total_p2} points`;
-    total_p2_div.style.color = games[0].players[1].getColor();
+    total_p2_div.style.color = games[0].players[1].getColor();    
     grid_div.appendChild(total_p2_div);
 }
 function updateInstructionsGameGridIsFull(results){
