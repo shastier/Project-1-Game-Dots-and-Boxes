@@ -99,6 +99,9 @@ class GameBoard {
     setGames(game){
         this.games.push(game);
     };
+    getGames(){
+        return this.games;
+    };
 }
 class Player {
     constructor(name){
@@ -407,6 +410,7 @@ function gameBoard_showResults(e){
     results_h2.setAttribute('id', "resuts");
 
     const grid_div = document.querySelector('.grid3_table');
+    grid_div.style.width = "150px";
     const children_div = grid_div.querySelectorAll('div');
 
     for (let i = 0; i < children_div.length; i++) {
@@ -418,12 +422,39 @@ function gameBoard_showResults(e){
 
     // switch div instructions element's position.
 
-    //create new div with class "grid3_table" to hold result's elements table.
+    //Add elements to class "grid3_table" result's elements table.
+    const games = gameBoard.getGames();      
+    let total_p1 = 0;
+    let total_p2 = 0;
 
-    //copied from restPoints() test console.log
-    // this.games.forEach(game => {
-    //     console.log(`Game: ${game.getGridSize()}, P1: ${game.getPlayerPoints(1)}, P2: ${game.getPlayerPoints(2)}`);
-    // });
+    const names_div = document.createElement('div');
+    names_div.innerHTML = `${games[0].getPlayerName(1)}   |   ${games[0].getPlayerName(2)}`;
+
+    grid_div.appendChild(names_div);
+
+    for (let i = 0; i < games.length; i++) {
+        total_p1 += games[i].getPlayerPoints(1);
+        total_p2 += games[i].getPlayerPoints(2);
+
+        const results_div = document.createElement('div');
+        results_div.style.display = "flex";
+        results_div.innerHTML = `Game ${i+1}: [${games[i].getGridSize()}]     ${games[i].getPlayerPoints(1)}      |      ${games[i].getPlayerPoints(2)}`;
+        grid_div.appendChild(results_div);
+    }
+
+    const total_div = document.createElement('div');
+    total_div.innerHTML = "Total: ";
+    grid_div.appendChild(total_div);
+    
+    const total_p1_div = document.createElement('div');
+    total_p1_div.innerHTML = `${games[0].getPlayerName(1)}: ${total_p1} points`;
+    total_p1_div.style.color = games[0].players[0].getColor();
+    grid_div.appendChild(total_p1_div);
+
+    const total_p2_div = document.createElement('div');
+    total_p2_div.innerHTML = `${games[0].getPlayerName(2)}: ${total_p2} points`;
+    total_p2_div.style.color = games[0].players[1].getColor();
+    grid_div.appendChild(total_p2_div);
 }
 function updateInstructionsGameGridIsFull(results){
     //show wireframe e & update closed boxes on screen.    
