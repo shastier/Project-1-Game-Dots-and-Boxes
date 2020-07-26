@@ -401,6 +401,7 @@ const gameBoard = new GameBoard();
 function gameBoard_Restart(e){   
     //Restart. Reset game status to its original state.
     const body_element = document.getElementsByTagName('body');
+    const body = body_element[0];
     const child_nodes = body_element[0].childNodes;
     
     for (let i = 0; i < child_nodes.length; i++) {
@@ -413,6 +414,27 @@ function gameBoard_Restart(e){
     for (let i = 0; i < children_div.length; i++) {
         children_div[i].remove();
     }
+
+    grid_div.remove();
+
+    const main_sec = document.createElement('section');
+    main_sec.className = "main";
+    main_sec.setAttribute('id', 'initial-state');
+    body.appendChild(main_sec);
+
+    const instructions_sec = document.createElement('div');
+    instructions_sec.className = "instructions";
+    main_sec.appendChild(instructions_sec);
+
+    const instructions_h2 = document.createElement('h2');
+    instructions_h2.innerHTML = "How to play: ";
+    main_sec.appendChild(instructions_h2);
+
+    const instruction_p = document.createElement('p');
+    instruction_p.innerHTML = "Dots and Boxes is a pencil and paper game for two players. It was first published in the 19th century by French mathematician Edouard Lucas. The game starts with an empty grid of dots, the grid can be of any size between 3x3 dots and up to 5x5 dots. Players will take turns to connect two dots with an horizontal or vertical line, if a player can close a 1x1 box, it earns one point and takes another turn to play. The game ends when no more lines can be placed. The winner will be the player who was able to accumulate more points.";
+    main_sec.appendChild(instruction_p);
+
+    
 }
 function gameBoard_showResults(e){    
     const results_h2 = document.getElementById('player_in_turn');
@@ -607,8 +629,7 @@ function setGrid(e){
     const gridSize = parseInt(e.target.id.charAt(e.target.id.length-1));
     const grid = new Grid(gridSize, gridSize);
         
-    gameBoard.setGrid(grid);
-    alert('abut to reset Points');
+    gameBoard.setGrid(grid);    
     gameBoard.resetPoints();  
     
     if (gameBoard.players.length < 2) {
