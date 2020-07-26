@@ -398,12 +398,23 @@ class Result {
 const gameBoard = new GameBoard();
 
 //Manipulating the DOM functions.
-function gameBoard_Restart(e){
-    alert('Re-start!');
+function gameBoard_Restart(e){   
     //Restart. Reset game status to its original state.
+    const body_element = document.getElementsByTagName('body');
+    const child_nodes = body_element[0].childNodes;
+    
+    for (let i = 0; i < child_nodes.length; i++) {
+        child_nodes[i].remove();
+    }
+    
+    const grid_div = document.querySelector('.grid3_table');
+    const children_div = grid_div.querySelectorAll('div');
+
+    for (let i = 0; i < children_div.length; i++) {
+        children_div[i].remove();
+    }
 }
-function gameBoard_showResults(e){
-    alert('Results!');    
+function gameBoard_showResults(e){    
     const results_h2 = document.getElementById('player_in_turn');
     results_h2.innerHTML = "Results:";
     results_h2.style.textDecoration = "underline";
