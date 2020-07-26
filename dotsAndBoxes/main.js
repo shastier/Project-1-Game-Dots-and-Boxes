@@ -460,6 +460,7 @@ function gameBoard_Restart(e){
     player1_input.setAttribute('id', 'player1');    
     player1_input.placeholder = "Player 1";
     player1_input.style.display = "flex";
+    player1_input.addEventListener('input', setPlayer);
     playerInfo_form.appendChild(player1_input);
 
     const player2_input = document.createElement('input');
@@ -468,6 +469,7 @@ function gameBoard_Restart(e){
     player2_input.setAttribute('id', 'player2');    
     player2_input.placeholder = "Player 2";
     player2_input.style.display = "flex";
+    player2_input.addEventListener('input', setPlayer);
     playerInfo_form.appendChild(player2_input);
 
     const gridSize_h2 = document.createElement('h2');
