@@ -405,23 +405,11 @@ const gameBoard = new GameBoard();
 
 //Manipulating the DOM functions.
 function gameBoard_Restart(e){   
-    //Restart. Reset game status to its original state.
-    const body_element = document.getElementsByTagName('body');
-    const body = body_element[0];
-    const child_nodes = body_element[0].childNodes;
-    
-    for (let i = 0; i < child_nodes.length; i++) {
-        child_nodes[i].remove();
-    }
-    
-    const grid_div = document.querySelector('.grid3_table');
-    const children_div = grid_div.querySelectorAll('div');
+    // remove all, but <header>
+    const main = document.querySelector('.main');
+    main.remove();
 
-    for (let i = 0; i < children_div.length; i++) {
-        children_div[i].remove();
-    }
-
-    grid_div.remove();
+    const body = document.querySelector('body');
 
     const main_sec = document.createElement('section');
     main_sec.className = "main";
@@ -434,11 +422,11 @@ function gameBoard_Restart(e){
 
     const instructions_h2 = document.createElement('h2');
     instructions_h2.innerHTML = "How to play: ";
-    main_sec.appendChild(instructions_h2);
+    instructions_sec.appendChild(instructions_h2);
 
     const instruction_p = document.createElement('p');
     instruction_p.innerHTML = "Dots and Boxes is a pencil and paper game for two players. It was first published in the 19th century by French mathematician Edouard Lucas. The game starts with an empty grid of dots, the grid can be of any size between 3x3 dots and up to 5x5 dots. Players will take turns to connect two dots with an horizontal or vertical line, if a player can close a 1x1 box, it earns one point and takes another turn to play. The game ends when no more lines can be placed. The winner will be the player who was able to accumulate more points.";
-    main_sec.appendChild(instruction_p);
+    instructions_sec.appendChild(instruction_p);
 
     const playerInfo_div = document.createElement('div');
     playerInfo_div.className = "playerInfo";
@@ -568,12 +556,23 @@ function updateInstructionsGameGridIsFull(results){
     const p = document.getElementsByTagName('p');
     p[0].remove();
 
+    //create a section with class main, append all elements, but <header> and append it to body
+    const body = document.querySelector('body');
+    const main_sec = document.createElement('section');
+    main_sec.className = "main";
+    body.append(main_sec);
+
     //Add a division with two buttons (Play & Restart) to div's class instructions.
-    const instructions_div = document.getElementsByClassName('instructions');
+    const instructions_div = document.querySelector('.instructions');    
     
+    main_sec.append(instructions_div);
+
+    const grid_table_div = document.querySelector('.grid3_table');
+    main_sec.append(grid_table_div);
+
     const btns_div = document.createElement('div');
     btns_div.className = "btns_div";
-    instructions_div[0].append(btns_div);
+    instructions_div.append(btns_div);
 
     const play_btn = document.createElement('button');
     const restart_btn = document.createElement('button');
@@ -588,16 +587,16 @@ function updateInstructionsGameGridIsFull(results){
     btns_div.append(restart_btn);
     btns_div.append(play_btn);
     
-    const body = document.querySelector('body');
     const footer = document.createElement('footer');
     footer.style.backgroundColor = "black";
-    body.append(footer);
+    main_sec.append(footer);
 
     const results_h2 = document.createElement('h2');
     results_h2.innerHTML = "Show results";
     results_h2.style.textDecoration = "underline";
     results_h2.addEventListener('click', gameBoard_showResults);
     footer.append(results_h2);
+
 }
 function playAgain(e){
     const body_tags = document.getElementsByTagName('body');
