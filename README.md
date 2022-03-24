@@ -9,7 +9,7 @@ HTML 5% used for basic initial game presentation.
 ## Approach taken
 Object Oriented Design. "gameBoard" is a variable of type "GameBoard" that handles the interaction between the UI(DOM manipulation in JavaScript) and the game's logic implemented using different classes depending on the required functionalities. GameBoard class has an array of two players, grid and results; each of them are classes. 
 
-The approach taken to represent the grid was to break it down into single pieces such as: dot, vertical line, horizontal line and box. All of them were div HTML tag dinamically created with JavaScript and styled using Flexbox and added 'click' EventListener to interact with the user and collect the information needed to make decisions.
+The approach taken to represent the grid was to break it down into single pieces such as: dot, vertical line, horizontal line and box. All of them were div HTML tag dynamically created with JavaScript and styled using Flexbox and added 'click' EventListener to interact with the user and collect the information needed to make decisions.
   
 ## User stories
 - a.) Presentation screen design and collect user’s information.
